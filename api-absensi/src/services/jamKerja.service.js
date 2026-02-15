@@ -21,7 +21,6 @@ const JamKerjaService = {
         jam_masuk: data.jam_masuk,
         batas_masuk: data.batas_masuk,
         jam_pulang: data.jam_pulang,
-        batas_pulang: data.batas_pulang,
       },
     });
   },
@@ -34,7 +33,6 @@ const JamKerjaService = {
         jam_masuk: data.jam_masuk,
         batas_masuk: data.batas_masuk,
         jam_pulang: data.jam_pulang,
-        batas_pulang: data.batas_pulang,
       },
     });
   },

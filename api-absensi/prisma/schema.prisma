@@ -80,7 +80,6 @@ model JamKerja {
   jam_masuk   String?
   batas_masuk String?
   jam_pulang  String?
-  batas_pulang String?
 
   absensi Absensi[]
 

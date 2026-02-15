@@ -338,8 +338,7 @@ const AbsensiService = {
     const jamPulangTime = dayjs(data.jam_pulang).tz(TZ);
     const jamMasukTime = dayjs(absensi.jam_masuk).tz(TZ);
 
-    // Previously we enforced a 'batas_pulang' deadline here. Requirement changed:
-    // allow pegawai to absen pulang even if past jam kerja/batas. Keep jamKerja info available.
+    // Allow pegawai to absen pulang anytime without time deadline restriction
 
     // Hitung total jam kerja dengan presisi detik (jangan hanya menit)
     const durationSeconds = jamPulangTime.diff(jamMasukTime, "second");

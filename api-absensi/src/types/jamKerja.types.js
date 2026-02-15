@@ -7,7 +7,6 @@ const JamKerjaSchema = z.object({
     jam_masuk: z.string().regex(timeRegex),
     batas_masuk: z.string().regex(timeRegex),
     jam_pulang: z.string().regex(timeRegex),
-    batas_pulang: z.string().regex(timeRegex).optional(),
 });
 
 const JamKerjaUpdateSchema = JamKerjaSchema.partial();
