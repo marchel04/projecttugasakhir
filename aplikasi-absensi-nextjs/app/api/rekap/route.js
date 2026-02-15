@@ -26,7 +26,7 @@ export async function GET(req) {
 
         const data = await backendRes.json();
         return NextResponse.json(data, { status: backendRes.status });
-    } catch (error) {
+    } catch {
         return NextResponse.json(
             { success: false, message: "Terjadi kesalahan server" },
             { status: 500 }

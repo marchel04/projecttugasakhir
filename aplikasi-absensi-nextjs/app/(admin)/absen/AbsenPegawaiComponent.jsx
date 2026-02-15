@@ -22,7 +22,7 @@ import {
   BarChartOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import dayjs from "dayjs";
 
 const AbsenPegawaiComponent = () => {
@@ -35,7 +35,7 @@ const AbsenPegawaiComponent = () => {
   const [selectedMonth, setSelectedMonth] = useState(dayjs());
   const [monthlyRekapData, setMonthlyRekapData] = useState(null);
 
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     try {
       const result = await fetch("/api/auth/me");
       const data = await result.json();
@@ -45,9 +45,9 @@ const AbsenPegawaiComponent = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
-  const fetchRiwayat = async () => {
+  const fetchRiwayat = useCallback(async () => {
     try {
       if (userData?.id_pegawai) {
         // Fetch riwayat
@@ -159,21 +159,9 @@ const AbsenPegawaiComponent = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [userData]);
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  useEffect(() => {
-    if (userData) {
-      fetchRiwayat();
-      fetchRekapData();
-      fetchMonthlyRecap(selectedMonth);
-    }
-  }, [userData, selectedMonth]);
-
-  const fetchRekapData = async () => {
+  const fetchRekapData = useCallback(async () => {
     try {
       if (userData?.id_pegawai) {
         const response = await fetch(`/api/rekap/pegawai-keseluruhan`);
@@ -186,9 +174,9 @@ const AbsenPegawaiComponent = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [userData]);
 
-  const fetchMonthlyRecap = async (month) => {
+  const fetchMonthlyRecap = useCallback(async (month) => {
     try {
       const bulanParam = month.format("YYYY-MM");
       const response = await fetch(`/api/rekap/pegawai?bulan=${bulanParam}`);
@@ -200,7 +188,22 @@ const AbsenPegawaiComponent = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchUserData();
+  }, [fetchUserData]);
+
+  useEffect(() => {
+    if (userData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      fetchRiwayat();
+      fetchRekapData();
+      fetchMonthlyRecap(selectedMonth);
+    }
+  }, [userData, selectedMonth, fetchRiwayat, fetchRekapData, fetchMonthlyRecap]);
+
   // Convert jam desimal to HH:MM:SS format (available to UI and print)
   const convertJamToHMS = (jamDesimal) => {
     if (!jamDesimal || jamDesimal === 0) return "00:00:00";

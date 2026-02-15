@@ -118,7 +118,7 @@ const DashboardPage = () => {
               try {
                 const s = dayjs(d.jam_pulang).diff(dayjs(d.jam_masuk), "second");
                 totalSeconds += Math.max(0, s);
-              } catch (e) {
+              } catch {
                 // ignore
               }
             }

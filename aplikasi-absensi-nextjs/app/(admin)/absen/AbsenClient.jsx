@@ -277,7 +277,7 @@ const AbsenClient = () => {
                 numValue = parseFloat((durationSeconds / 3600).toFixed(4));
               }
             }
-          } catch (e) {
+          } catch {
             // Silent fallback
           }
         }

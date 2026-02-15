@@ -30,8 +30,6 @@ const BerandaClient = () => {
   const [role, setRole] = useState(null);
   const [pegawai, setPegawai] = useState(null);
   const [absen, setAbsen] = useState(null);
-  const [jam, setJam] = useState(null);
-  const [izin, setIzin] = useState(null);
   const [izinHariIni, setIzinHariIni] = useState(null);
   const [nip, setNip] = useState("");
   const [loading, setLoading] = useState(true);
@@ -239,14 +237,12 @@ const BerandaClient = () => {
     }
   };
 
-  const showModalAdd = (record) => {
+  const showModalAdd = () => {
     // langsung lakukan absen tanpa meminta pemilihan jam kerja
-    setJam(record);
     handleAbsenMasuk();
   };
 
-  const showModalIzin = (record) => {
-    setIzin(record);
+  const showModalIzin = () => {
     form.resetFields();
     setIsModalIzinOpen(true);
   };
