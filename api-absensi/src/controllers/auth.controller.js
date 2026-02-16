@@ -50,12 +50,14 @@ async function login(req, res, next) {
 
     const token = generateToken({ nip: login.nip }, expiresIn);
 
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      secure: process.env.APP_ENV !== "development",
-      sameSite: "strict",
-      ...(remember ? { maxAge } : {}),
-    });
+  res.cookie("jwt", token, {
+  httpOnly: true,
+  secure: process.env.APP_ENV !== "development",
+  sameSite: "lax",
+  domain: process.env.COOKIE_DOMAIN || undefined,
+  path: "/",
+  ...(remember ? { maxAge } : {}),
+});
 
     return sendSuccessResponse(
       res,
@@ -74,10 +76,12 @@ async function login(req, res, next) {
 async function logout(req, res, next) {
   try {
     res.clearCookie("jwt", {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.APP_ENV !== "development",
-    });
+  httpOnly: true,
+  secure: process.env.APP_ENV !== "development",
+  sameSite: "lax",
+  domain: process.env.COOKIE_DOMAIN || undefined,
+  path: "/",
+});
     return sendSuccessNoDataResponse(res, "Logout successful");
   } catch (error) {
     next(error);
